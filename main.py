@@ -47,3 +47,25 @@ gpx_times = []
 files_list = os.listdir('/Users/arkadiuszgalas/Documents/python/merging-gpx/input')
 dir_name = os.path.dirname(__file__)
 dir_name_input = os.path.join(dir_name,'input')
+
+# Building list: minimum timestamp, maximum timestamp, filename
+for file_gpx in files_list:
+   gpx_file_input_path = os.path.join(dir_name_input,file_gpx)
+   gpx_file = open(gpx_file_input_path, "r", encoding = "utf8")
+   gpx_data = gpx_file.read()
+   gpx_data_list = gpx_data.split("\n")
+   gpx_file.close()
+
+   min_ts_within_gpx = find_minimum_date(gpx_data_list)
+   max_ts_within_gpx = find_maximum_date(gpx_data_list)
+   list_tmp = [min_ts_within_gpx,max_ts_within_gpx,file_gpx]
+   gpx_times.append(list_tmp)
+
+bubble_sort(gpx_times)
+
+gpx_valid = True
+# Validating if there is overlaps in gpx files
+for i in range(len(gpx_times) - 1):
+   if gpx_times[i][1] >= gpx_times[i+1][0]:
+      gpx_valid = False
+print(f"VAlidation status: {gpx_valid}")
