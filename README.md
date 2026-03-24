@@ -15,7 +15,7 @@ continuous route.
 ---
 
 ## 🚀 Ideas for improvements
-1. Adding validation if input directory exists and contains at least two gpx files
+1. Adding validation if input directory contains at least two gpx files
 2. Adding check if gpx filenames have correct naming conventions (places and spaces)
 3. Moving creating output file to function
 4. Changing all operation on files and directories into Path objects
