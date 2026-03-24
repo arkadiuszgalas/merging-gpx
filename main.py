@@ -2,13 +2,6 @@ import datetime
 import os
 from pathlib import Path
 
-# Ideas for improvements:
-# 1. Checking if input directory is not empty
-# 2. Checking if gpx filenames have correct naming conventions (places and spaces)
-# 3. Moving creating output file to function
-# 4. Changing all operation on files and directories to Path objects
-# 5. Changing absolute paths into relative
-
 def find_minimum_date(gpx_input_list):
    minimum_ts = datetime.datetime(2040, 12, 31)
    for val in gpx_input_list:
