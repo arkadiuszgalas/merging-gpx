@@ -68,70 +68,74 @@ if input_dir.exists():
    gpx_times = []
 
    files_list = os.listdir('/Users/arkadiuszgalas/Documents/python/merging-gpx/input')
-   dir_name = os.path.dirname(__file__)
-   dir_name_input = os.path.join(dir_name,'input')
+   # Checking if input directory contains more than one file
+   if len(files_list) > 1:
+      dir_name = os.path.dirname(__file__)
+      dir_name_input = os.path.join(str(dir_name),'input')
 
-   # Building list: minimum timestamp, maximum timestamp, filename
-   for file_gpx in files_list:
-      gpx_file_input_path = os.path.join(dir_name_input,file_gpx)
-      gpx_file = open(gpx_file_input_path, "r", encoding = "utf8")
-      gpx_data = gpx_file.read()
-      gpx_data_list = gpx_data.split("\n")
-      gpx_file.close()
+      # Building list: minimum timestamp, maximum timestamp, filename
+      for file_gpx in files_list:
+         gpx_file_input_path = os.path.join(dir_name_input,file_gpx)
+         gpx_file = open(gpx_file_input_path, "r", encoding = "utf8")
+         gpx_data = gpx_file.read()
+         gpx_data_list = gpx_data.split("\n")
+         gpx_file.close()
 
-      min_ts_within_gpx = find_minimum_date(gpx_data_list)
-      max_ts_within_gpx = find_maximum_date(gpx_data_list)
-      list_tmp = [min_ts_within_gpx,max_ts_within_gpx,file_gpx]
-      gpx_times.append(list_tmp)
+         min_ts_within_gpx = find_minimum_date(gpx_data_list)
+         max_ts_within_gpx = find_maximum_date(gpx_data_list)
+         list_tmp = [min_ts_within_gpx,max_ts_within_gpx,file_gpx]
+         gpx_times.append(list_tmp)
 
-   bubble_sort(gpx_times)
+         bubble_sort(gpx_times)
 
-   gpx_valid = True
+         gpx_valid = True
 
-   # Validating if there is overlaps in gpx files
-   for i in range(len(gpx_times) - 1):
-      if gpx_times[i][1] >= gpx_times[i+1][0]:
-         gpx_valid = False
+      # Validating if there is overlaps in gpx files
+      for i in range(len(gpx_times) - 1):
+         if gpx_times[i][1] >= gpx_times[i+1][0]:
+            gpx_valid = False
 
-   print(f"Validation status: {gpx_valid}")
-   if gpx_valid:
-      # setting output file name
-      filename_output = set_filename(gpx_times,gpx_data_list)
+      print(f"Validation status: {gpx_valid}")
+      if gpx_valid:
+         # setting output file name
+         filename_output = set_filename(gpx_times,gpx_data_list)
 
-      # checking if output directory exists
-      output_dir = Path('/Users/arkadiuszgalas/Documents/python/merging-gpx/output')
-      if not output_dir.exists():
-         os.makedirs('/Users/arkadiuszgalas/Documents/python/merging-gpx/output')
+         # checking if output directory exists
+         output_dir = Path('/Users/arkadiuszgalas/Documents/python/merging-gpx/output')
+         if not output_dir.exists():
+            os.makedirs('/Users/arkadiuszgalas/Documents/python/merging-gpx/output')
 
-      # creating output .gpx file in output directory
-      dir_name_output = os.path.join(dir_name, 'output')
-      gpx_file_path_out = os.path.join(dir_name_output, filename_output)
-      outputGpxFile = open(gpx_file_path_out, 'w', encoding = 'utf8')
+         # creating output .gpx file in output directory
+         dir_name_output = os.path.join(dir_name, 'output')
+         gpx_file_path_out = os.path.join(dir_name_output, filename_output)
+         outputGpxFile = open(gpx_file_path_out, 'w', encoding = 'utf8')
 
-      for l in range(len(gpx_times)):
-         gpx_file_path_w = os.path.join(dir_name_input,gpx_times[l][2])
-         gpx_file_w = open(gpx_file_path_w, "r", encoding = "utf8")
-         gpx_data_w = gpx_file_w.read()
-         gpx_data_list_w = gpx_data_w.split("\n")
-         gpx_file_w.close()
+         for l in range(len(gpx_times)):
+            gpx_file_path_w = os.path.join(dir_name_input,gpx_times[l][2])
+            gpx_file_w = open(gpx_file_path_w, "r", encoding = "utf8")
+            gpx_data_w = gpx_file_w.read()
+            gpx_data_list_w = gpx_data_w.split("\n")
+            gpx_file_w.close()
 
-         if l == 0:
-            for val_w in gpx_data_list_w:
-               if val_w.find("</trkseg>") == -1 and val_w.find("</trk>") == -1 and val_w.find("</gpx>") == -1:
-                  outputGpxFile.write(val_w)
-                  outputGpxFile.write("\n")
-         else:
-            for val_w in gpx_data_list_w:
-               if val_w.find("<trkpt") != -1:
-                  outputGpxFile.write(val_w)
-                  outputGpxFile.write("\n")
-      outputGpxFile.write("    </trkseg>")
-      outputGpxFile.write("\n")
-      outputGpxFile.write("  </trk>")
-      outputGpxFile.write("\n")
-      outputGpxFile.write("</gpx>")
-      outputGpxFile.write("\n")
+            if l == 0:
+               for val_w in gpx_data_list_w:
+                  if val_w.find("</trkseg>") == -1 and val_w.find("</trk>") == -1 and val_w.find("</gpx>") == -1:
+                     outputGpxFile.write(val_w)
+                     outputGpxFile.write("\n")
+            else:
+               for val_w in gpx_data_list_w:
+                  if val_w.find("<trkpt") != -1:
+                     outputGpxFile.write(val_w)
+                     outputGpxFile.write("\n")
+         outputGpxFile.write("    </trkseg>")
+         outputGpxFile.write("\n")
+         outputGpxFile.write("  </trk>")
+         outputGpxFile.write("\n")
+         outputGpxFile.write("</gpx>")
+         outputGpxFile.write("\n")
+      else:
+         print("Validation of gpx filed failed.")
    else:
-      print("Validation of gpx filed failed.")
+      print("Input directory contains less than 2 files. Processing stopped.")
 else:
    print("Directory input does not exists. Processing stopped.")

@@ -15,10 +15,9 @@ continuous route.
 ---
 
 ## 🚀 Ideas for improvements
-1. Adding validation if input directory contains at least two gpx files
-2. Adding check if gpx filenames have correct naming conventions (places and spaces)
-3. Moving creating output file to function
-4. Changing all operation on files and directories into Path objects
-5. Changing absolute paths into relative ones
-6. Moving all functions to separate module
-7. Checking if gpx files were generated the same day
+1. Adding check if gpx filenames have correct naming conventions (places and spaces)
+2. Moving creating output file to function
+3. Changing all operation on files and directories into Path objects
+4. Changing absolute paths into relative ones
+5. Moving all functions to separate module
+6. Checking if gpx files were generated the same day
