@@ -10,8 +10,10 @@ continuous route.
 
 - Merge multiple `.gpx` files into one
 - Merged tracks are sorted from oldest to newest
-- Output file is saved to output directory in main directory
+- Output file is saved to output directory in main directory /Users/arkadiuszgalas/Documents/python/merging-gpx/output
 - Merged files should have naming pattern [Place1]_[Place2]_[other_information].gpx e.g. Prague_Brno_2072024.gpx
+- Merged files should not be duplicated
+- Merged files should not overlap (in sense of time registered in files)
 ---
 
 ## 🚀 Ideas for improvements
