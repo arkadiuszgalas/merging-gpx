@@ -1,36 +1,7 @@
 import datetime
 import os
 from pathlib import Path
-
-def find_minimum_date(gpx_input_list):
-   minimum_ts = datetime.datetime(2040, 12, 31)
-   for val in gpx_input_list:
-      if val.find("<time>") != -1 and val.find("</time>") != -1 and val.find("<trkpt") != -1:
-         date_point = val[val.find("<time>") + 6:val.find("</time>") + 1]
-         current_ts = datetime.datetime(int(date_point[0:4]),
-                                        int(date_point[5:7]),
-                                        int(date_point[8:10]),
-                                        int(date_point[11:13]),
-                                        int(date_point[14:16]),
-                                        int(date_point[17:19]))
-         if current_ts < minimum_ts:
-            minimum_ts = current_ts
-   return minimum_ts
-
-def find_maximum_date(gpx_input_list):
-   maximum_ts = datetime.datetime(2000, 1, 1)
-   for val in gpx_input_list:
-      if val.find("<time>") != -1 and val.find("</time>") != -1 and val.find("</trkpt>") != -1:
-         date_point = val[val.find("<time>") + 6:val.find("</time>") + 1]
-         current_ts = datetime.datetime(int(date_point[0:4]),
-                                        int(date_point[5:7]),
-                                        int(date_point[8:10]),
-                                        int(date_point[11:13]),
-                                        int(date_point[14:16]),
-                                        int(date_point[17:19]))
-         if current_ts > maximum_ts:
-            maximum_ts = current_ts
-   return maximum_ts
+from functions_time import find_minimum_date,find_maximum_date
 
 def bubble_sort(input_list):
    n = len(input_list)
@@ -58,7 +29,7 @@ def set_filename(input_list,gpx_input_list):
    datetime_now = datetime_now.replace('.','_')[:-3]
 
    # creating final version of filename
-   filename_out = start_place + '_' + end_place + '_' + date_trip + '_' + datetime_now
+   filename_out = start_place + '_' + end_place + '_' + date_trip + '_' + datetime_now + '.gpx'
    return filename_out
 
 def check_naming_convention(gpx_files_input_list):
@@ -72,6 +43,8 @@ def check_naming_convention(gpx_files_input_list):
 
 # Checking if input directory exists
 input_dir = Path.cwd() / 'input'
+gpx_valid = True
+
 if input_dir.exists():
    # List gpx_times contains minimum timestamp, maximum timestamp and filename found in input directory
    gpx_times = []
