@@ -17,8 +17,7 @@ continuous route.
 ---
 
 ## 🚀 Ideas for improvements
-1. Moving creating output file to function
-2. Changing all operation on files and directories into Path objects
-3. Changing absolute paths into relative ones
-4. Moving all functions to separate module
-5. Checking if gpx files were generated the same day
+1. Changing absolute paths into relative ones
+2. Moving all functions to separate module
+3. Adding function that creates output .gpx file
+4. Checking if gpx files were generated the same day
